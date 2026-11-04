@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="选定三枚硬币的组合，逐次抛掷并保留完整记录。一个可以和朋友一起玩的 Penney's Game。">
+  <title>三枚硬币 · Penney's Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="core.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="wordmark" href="./index.html" aria-label="三枚硬币首页"><span class="brand-coin" aria-hidden="true">◒</span> 三枚硬币</a>
+      <a class="source-link" href="https://github.com/ShenTenghui/penney-game" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">PENNEY'S GAME</p>
+      <h1 id="title">同一枚硬币，<br class="mobile-break">两个人的等待。</h1>
+      <p class="intro-copy">各选一个三枚硬币的组合，接着一直抛。<br>谁的组合先连续出现，谁就赢。</p>
+    </section>
+
+    <section class="game" aria-label="硬币游戏">
+      <div class="choices">
+        <div class="player-card player-one">
+          <div class="player-heading"><span class="player-tag">P1</span><label for="p1">先选的人</label></div>
+          <div id="p1-coins" class="pattern-coins" aria-hidden="true"></div>
+          <select id="p1" aria-label="P1 的三枚硬币组合"></select>
+        </div>
+        <span class="versus" aria-hidden="true">vs</span>
+        <div class="player-card player-two">
+          <div class="player-heading"><span class="player-tag">P2</span><label for="p2">后选的人</label></div>
+          <div id="p2-coins" class="pattern-coins" aria-hidden="true"></div>
+          <select id="p2" aria-label="P2 的三枚硬币组合"></select>
+        </div>
+      </div>
+      <p class="choice-hint" id="choice-hint">先由 P1 选择，再由 P2 选择；两人的组合不能相同。</p>
+
+      <div class="play-area">
+        <div class="coin-stage" aria-hidden="true"><div id="large-coin" class="large-coin"><span id="coin-face">?</span></div></div>
+        <div class="round-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <p id="status" role="status" aria-live="polite">组合选好了，就抛第一枚。</p>
+        </div>
+        <div class="primary-actions">
+          <button id="toss" class="button button-primary" type="button">抛一次 <span aria-hidden="true">↗</span></button>
+          <button id="auto" class="button button-secondary" type="button" aria-pressed="false">连续抛掷</button>
+        </div>
+        <div class="manual-actions"><span>用真实硬币玩？</span><button id="manual-h" type="button">记录正</button><button id="manual-t" type="button">记录反</button></div>
+      </div>
+
+      <div class="history-section">
+        <div class="section-heading"><h2>抛掷记录 <span id="total" class="count">0</span></h2><div class="totals"><span>正 <b id="heads">0</b></span><span>反 <b id="tails">0</b></span></div></div>
+        <p class="history-note">从第 1 次开始，依次向右阅读。匹配会跨越相邻的每一次抛掷。</p>
+        <ol id="history" class="history" aria-label="按时间排列的完整抛掷记录"></ol>
+        <p id="history-empty" class="history-empty">还没有记录。故事从下一枚硬币开始。</p>
+        <div class="history-footer"><span id="save-status">本轮会保存在当前浏览器。</span><button id="reset" class="text-button" type="button">新一轮 <span aria-hidden="true">↺</span></button></div>
+      </div>
+    </section>
+
+    <details class="explanation" id="explanation">
+      <summary>为什么后选的人可能更有优势？<span class="details-mark" aria-hidden="true">＋</span></summary>
+      <div class="explanation-body">
+        <p>这叫 <em>Penney's Game</em>。每个三枚组合单独看都一样可能，但两个不同组合之间的等待并不对称：一个组合的末尾，可能恰好是另一个组合的开头。</p>
+        <p>如果 P1 选了「甲、乙、丙」，P2 可以选「乙的反面、甲、乙」。这样选，P2 的胜率总会大于一半。公平的硬币，也能形成不对称的比赛。</p>
+        <div class="strategy-row"><div><span class="probability-label">按当前双方组合，P2 的理论胜率</span><strong id="probability">2 / 3</strong></div><button id="counter" class="button button-secondary" type="button">替 P2 选一个应对组合</button></div>
+        <p class="fine-print">这里显示精确概率。每次抛掷独立、正反各半；单局结果仍有随机性。组合开始后锁定，连续抛掷每 0.6 秒记录一次，出现赢家就停。</p>
+        <a class="paper-link" href="https://arxiv.org/abs/1904.09888" target="_blank" rel="noopener noreferrer">延伸阅读：Penney's Game 的数学分析 ↗</a>
+      </div>
+    </details>
+
+    <footer class="footer"><span>一枚硬币就够了。</span><span>本轮记录保存在当前浏览器</span></footer>
+    <p id="error" class="error" role="alert" hidden></p>
+  </main>
+</body>
+</html>

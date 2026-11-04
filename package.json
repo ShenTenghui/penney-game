@@ -1,0 +1,9 @@
+{
+  "name": "penney-game",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small, browser-local Penney's Game with complete toss history.",
+  "license": "MIT",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=22" }
+}
